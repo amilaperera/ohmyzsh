@@ -70,7 +70,7 @@ ZSH_THEME="ramboda"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-prompt z tmux tmuxinator vi-mode history-substring-search extract colored-man-pages)
+plugins=(git git-prompt z tmux tmuxinator vi-mode history-substring-search extract colored-man-pages zle-extras ls-colors)
 
 source $ZSH/oh-my-zsh.sh
 
