@@ -1,5 +1,7 @@
 # custom files
-custom/
+# I'm not ignoring custom files since all my personal
+# stuff will be managed under custom
+# custom/
 
 # temp files directories
 cache/
