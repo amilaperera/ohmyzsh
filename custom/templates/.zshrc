@@ -28,7 +28,7 @@ plugins=(git git-prompt)
 # vim/nvim & tmux
 plugins+=(tmux tmuxinator vi-mode)
 # misc
-plugins+=(z extract colored-man-pages)
+plugins+=(z extract history-substring-search colored-man-pages)
 # custom
 plugins+=(zle-extras)
 
@@ -36,7 +36,11 @@ plugins+=(zle-extras)
 # It contains some functions that are being used
 # by other custom files
 custom_utils=$ZSH/custom/lib/utils.zsh
-[[ -f ${custom_utils} ]] && source ${custom_utils}
+if [[ -f ${custom_utils} ]]; then
+	source ${custom_utils}
+	_export_distro_info
+fi
 
+# Starts oh-my-zsh configuration
 source $ZSH/oh-my-zsh.sh
 
