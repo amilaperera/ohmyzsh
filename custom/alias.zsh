@@ -50,7 +50,6 @@ alias t='tmux -u'
 alias ta='tmux attach-session -t'
 alias tk='tmux kill-session -t'
 alias tl='tmux list-sessions'
-alias ts='tmux_start' # invokes the custom tmux_start function, which creates a session with user name
 alias mux='tmuxinator'
 
 # silver searcher
