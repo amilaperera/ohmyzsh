@@ -1,10 +1,5 @@
 #!/bin/zsh
 
-# first source the main functions
-zsh_orig_functions="$ZSH/lib/functions.zsh"
-source $zsh_orig_functions
-unset zsh_orig_functions
-
 # defining zsh true/false {{{
 zsh_true=0
 zsh_false=1
