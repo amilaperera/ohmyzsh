@@ -30,16 +30,7 @@ plugins+=(tmux tmuxinator vi-mode)
 # misc
 plugins+=(z extract history-substring-search colored-man-pages)
 # custom
-plugins+=(zle-extras)
-
-# source the custom utilities first.
-# It contains some functions that are being used
-# by other custom files
-custom_utils=$ZSH/custom/lib/utils.zsh
-if [[ -f ${custom_utils} ]]; then
-	source ${custom_utils}
-	_export_distro_info
-fi
+plugins+=(utils-extras zle-extras)
 
 # Starts oh-my-zsh configuration
 source $ZSH/oh-my-zsh.sh

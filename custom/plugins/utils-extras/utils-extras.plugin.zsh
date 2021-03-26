@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# This contains utility functions that are used by other custom scripts.
+# Finally this exports the Linux distribution related information
+
 # defining zsh true/false
 zsh_true=0
 zsh_false=1
@@ -121,4 +124,7 @@ function _source_if_possible() {
 function _is_tmux() {
 	[[ -n $TMUX ]] && return $zsh_true || return $zsh_false
 }
+
+# Eventually export the distribution information
+_export_distro_info
 
