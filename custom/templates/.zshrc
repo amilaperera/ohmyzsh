@@ -28,7 +28,7 @@ plugins=(git)
 # vim/nvim & tmux
 plugins+=(vi-mode tmux tmuxinator)
 # misc
-plugins+=(z extract history-substring-search)
+plugins+=(z extract history-substring-search colored-man-pages)
 # custom
 plugins+=(utils-extras zle-extras)
 

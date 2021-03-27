@@ -29,3 +29,6 @@ export FCEDIT="$VISUAL"
 # core dump
 ulimit -c unlimited
 
+# On some systems this is needed to view colored man pages
+export GROFF_NO_SGR=1
+
