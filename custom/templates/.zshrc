@@ -26,7 +26,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # git
 plugins=(git)
 # vim/nvim & tmux
-plugins+=(tmux tmuxinator vi-mode)
+plugins+=(vi-mode tmux tmuxinator)
 # misc
 plugins+=(z extract history-substring-search colored-man-pages)
 # custom
