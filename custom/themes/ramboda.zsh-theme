@@ -31,10 +31,15 @@ local last_status="%(?,%{$fg[green]%}✓%{$reset_color%},%{$fg[red]%}✗%{$reset
 PROMPT='┌─${op}${last_status}${cp}─${op}${user_host_path}${cp}$(git_prompt_info)
 └─${op}${hist_no}${cp}${b} %# '
 
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}─(%{$fg_bold[green]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}✗%{$reset_color%})"
+ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}✓%{$reset_color%})"
+
 # prompt - PS2
 PROMPT2="%B%F{8}Continue%f%b : "
 
-# Prepare RPROMP
+# Prepare RPROMPT
 # ssh connection in prompt
 function ssh_connection() {
   if [[ -n $SSH_CONNECTION ]]; then
@@ -45,23 +50,13 @@ function ssh_connection() {
 # build rprompt
 function rprompt_info() {
     local docker_info=""
-    local vi_info=""
-    local ssh_conn=""
     # docker info
     if [[ -n $DOCKER_MACHINE ]]; then
         docker_info="%{$fg_bold[red]%}(docker:%{$fg_bold[green]%}$DOCKER_MACHINE%{$fg_bold[red]%})%{$reset_color%}"
     fi
-    #vi mode info
-    vi_info="$(vi_mode_prompt_info)"
 
-    #ssh connection
-    ssh_conn="$(ssh_connection)"
-    echo "$vi_info $docker_info$ssh_conn"
+    echo "$(vi_mode_prompt_info) $docker_info$(ssh_connection)"
 }
-RPROMPT='$(rprompt_info)'
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}─(%{$fg_bold[green]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}✗%{$reset_color%})"
-ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}✓%{$reset_color%})"
+RPROMPT='$(rprompt_info)'
 
