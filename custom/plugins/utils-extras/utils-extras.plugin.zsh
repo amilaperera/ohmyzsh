@@ -22,65 +22,64 @@ zsh_reset_color="\033[0m"
 
 # echo in red color
 function _echo_red() {
-	echo -e $zsh_red_color"$@"$zsh_reset_color
+  echo -e $zsh_red_color"$@"$zsh_reset_color
 }
 
 # echo in green color
 function _echo_green() {
-	echo -e $zsh_green_color"$@"$zsh_reset_color
+  echo -e $zsh_green_color"$@"$zsh_reset_color
 }
 
 # echo in yellow color
 function _echo_yellow() {
-	echo -e $zsh_yellow_color"$@"$zsh_reset_color
+  echo -e $zsh_yellow_color"$@"$zsh_reset_color
 }
 
 # echo in blue color
 function _echo_blue() {
-	echo -e $zsh_blue_color"$@"$zsh_reset_color
+  echo -e $zsh_blue_color"$@"$zsh_reset_color
 }
 
 # logging
 function _console_log() {
-	echo '['$(date +'%a %Y-%m-%d %H:%M:%S %z')']' $1
+  echo '['$(date +'%a %Y-%m-%d %H:%M:%S %z')']' $1
 }
 
 # prompts the user for confirmation and returns 'y'/'n'
 function _confirm() {
-	local answer=''
-	local choice=''
+  local answer=''
+  local choice=''
 
-	local prompt="confirm [y/n] > "
+  local prompt="confirm [y/n] > "
 
-	until [[ "$choice" = "y" || "$choice" = "n" ]]; do
+  until [[ "$choice" = "y" || "$choice" = "n" ]]; do
+    read -r "answer?$prompt"
+    case "$answer" in
+      [yY] ) choice='y';;
+      [nN] ) choice='n';;
+      * ) ;;
+    esac
+  done
 
-		read -r "answer?$prompt"
-		case "$answer" in
-			[yY] ) choice='y';;
-			[nN] ) choice='n';;
-			* ) ;;
-		esac
-	done
-
-	[ "$choice" = "y" ] && return $zsh_true || return $zsh_false
+  [ "$choice" = "y" ] && return $zsh_true || return $zsh_false
 }
 
 # checks if the current shell is interactive
 function _check_for_shell_interactivity() {
-	case "$-" in
-		*i* ) return $zsh_true;;
-		* ) return $zsh_false;;
-	esac
+  case "$-" in
+    *i* ) return $zsh_true;;
+    * ) return $zsh_false;;
+  esac
 }
 
 # checks if command exists
 function _command_exists() {
-	if  (($# != 1)) ; then
-		echo "_command_exists function should take exactly one argument"
-		return $zsh_false
-	fi
+  if  (($# != 1)) ; then
+    echo "_command_exists function should take exactly one argument"
+    return $zsh_false
+  fi
 
-	type $1 >/dev/null 2>&1
+  type $1 >/dev/null 2>&1
 }
 
 # get the information of the installed Linux distribution
@@ -88,41 +87,41 @@ function _command_exists() {
 # you might need to install it from the official repos of the
 # particular repositories.
 function _export_distro_info() {
-	if [[ "$OSTYPE" = linux* ]]; then
-		# exporting APT/DNF related variables
-		ZSH_HAS_APT=0
-		ZSH_HAS_DNF=0
-		ZSH_HAS_PACMAN=0
+  if [[ "$OSTYPE" = linux* ]]; then
+    # exporting APT/DNF related variables
+    ZSH_HAS_APT=0
+    ZSH_HAS_DNF=0
+    ZSH_HAS_PACMAN=0
 
-		if _command_exists 'apt-get'; then
-			export ZSH_HAS_APT=1
-		elif _command_exists 'dnf'; then
-			export ZSH_HAS_DNF=1
-		elif _command_exists 'pacman'; then
-			export ZSH_HAS_PACMAN=1
-		fi
+    if _command_exists 'apt-get'; then
+      export ZSH_HAS_APT=1
+    elif _command_exists 'dnf'; then
+      export ZSH_HAS_DNF=1
+    elif _command_exists 'pacman'; then
+      export ZSH_HAS_PACMAN=1
+    fi
 
-		# exporting distribution/version related information
-		if _command_exists lsb_release; then
-			export distroname=$(lsb_release -si) # distro name
-			export distrover=$(lsb_release -sr)  # distibution version
-			export arch=$(uname -m)              # architecture
-		else
-			_echo_red "Install lsb_release first"
-		fi
-	fi
+    # exporting distribution/version related information
+    if _command_exists lsb_release; then
+      export distroname=$(lsb_release -si) # distro name
+      export distrover=$(lsb_release -sr)  # distibution version
+      export arch=$(uname -m)              # architecture
+    else
+      _echo_red "Install lsb_release first"
+    fi
+  fi
 }
 
 # source a file if it exists & readable
 function _source_if_possible() {
-	if [[ -r $1 ]]; then
-		source $1
-	fi
+  if [[ -r $1 ]]; then
+    source $1
+  fi
 }
 
 # check if we're in a tmux session or not
 function _is_tmux() {
-	[[ -n $TMUX ]] && return $zsh_true || return $zsh_false
+  [[ -n $TMUX ]] && return $zsh_true || return $zsh_false
 }
 
 # Eventually export the distribution information

@@ -14,11 +14,11 @@ path+=('/snap/bin')
 
 # setting editor
 if _command_exists 'nvim'; then
-	VISUAL='nvim'
+  VISUAL='nvim'
 elif _command_exists 'vim'; then
-	VISUAL='vim'
+  VISUAL='vim'
 else
-	VISUAL='vi'
+  VISUAL='vi'
 fi
 export VISUAL
 export EDITOR="$VISUAL"

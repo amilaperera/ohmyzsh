@@ -1,17 +1,17 @@
-# quickly changing directories {{{
+# quickly changing directories
 # hacked from zsh-lovers
-rationalise-dot() {
-	if [[ $LBUFFER = *.. ]]; then
-		LBUFFER+=/..
-	else
-		LBUFFER+=.
-	fi
+function rationalise-dot() {
+  if [[ $LBUFFER = *.. ]]; then
+    LBUFFER+=/..
+  else
+    LBUFFER+=.
+  fi
 }
+
 zle -N rationalise-dot
 bindkey . rationalise-dot
-# }}}
 
-# history substring search bindings {{{
+# history substring search bindings
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
-# }}}
+

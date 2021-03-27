@@ -11,10 +11,10 @@ local username=$(whoami)
 # change in appearance for root and non-root users
 local user=
 if (( $UID == 0 )); then
-    username=`echo $username | tr 'a-z' 'A-Z'`
-    user="%{$fg_bold[red]%}${username}%{$reset_color%}"
+  username=`echo $username | tr 'a-z' 'A-Z'`
+  user="%{$fg_bold[red]%}${username}%{$reset_color%}"
 else
-    user="%{$fg_bold[white]%}${username}%{$reset_color%}"
+  user="%{$fg_bold[white]%}${username}%{$reset_color%}"
 fi
 local host="%{$fg_bold[magenta]%}%m%{$reset_color%}" # host name
 local wkp="%{$fg_bold[yellow]%}%~%f%{$reset_color%}" # working path
@@ -39,9 +39,8 @@ ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}✓%{$reset_color%})"
 # prompt - PS2
 PROMPT2="%B%F{8}Continue%f%b : "
 
-VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
-
 # Prepare RPROMPT
+VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
 
 # ssh status
 function ssh_connection() {
