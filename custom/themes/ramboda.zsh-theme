@@ -5,17 +5,10 @@ setopt promptsubst # sets the PROMPT_SUBST option enabled
 # Prepare main prompt
 local op="("
 local cp=")"
-local username=$(whoami)
 
-# user name.
-# change in appearance for root and non-root users
-local user=
-if (( $UID == 0 )); then
-  username=`echo $username | tr 'a-z' 'A-Z'`
-  user="%{$fg_bold[red]%}${username}%{$reset_color%}"
-else
-  user="%{$fg_bold[white]%}${username}%{$reset_color%}"
-fi
+# we capitalize SUPERUSER. Therefore use $USERNAME variable rather than using %n
+username=$USERNAME
+user="%(!,%{$fg_bold[red]%}${username:u},%{$fg_bold[white]%}${username})%{$reset_color%}" # username
 local host="%{$fg_bold[magenta]%}%m%{$reset_color%}" # host name
 local wkp="%{$fg_bold[yellow]%}%~%f%{$reset_color%}" # working path
 
