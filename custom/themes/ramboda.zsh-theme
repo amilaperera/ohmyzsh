@@ -3,31 +3,30 @@
 setopt promptsubst # sets the PROMPT_SUBST option enabled
 
 # Prepare main prompt
-local op="("
-local cp=")"
+local open="("
+local close=")"
 
 # we capitalize SUPERUSER. Therefore use $USERNAME variable rather than using %n
-username=$USERNAME
-user="%(!,%{$fg_bold[red]%}${username:u},%{$fg_bold[white]%}${username})%{$reset_color%}" # username
+local username=$USERNAME
+local user="%(!,%{$fg_bold[red]%}${username:u},%{$fg_bold[white]%}${username})%{$reset_color%}" # username
 local host="%{$fg_bold[magenta]%}%m%{$reset_color%}" # host name
 local wkp="%{$fg_bold[yellow]%}%~%f%{$reset_color%}" # working path
 
 # username@hostname:wkp
-local user_host_path="${user}%{$fg_bold[cyan]%}@${host}%{$fg_bold[cyan]%}:${wkp}"
-
+user_host_path="${open}${user}%{$fg_bold[cyan]%}@${host}%{$fg_bold[cyan]%}:${wkp}${close}"
 # history number
-local hist_no="%{$fg_bold[blue]%}%h%f%{$reset_color%}"
+hist_no="${open}%{$fg_bold[blue]%}%h%f%{$reset_color%}${close}"
 # return status of the last command
-local last_status="%(?,%{$fg[green]%}✓%{$reset_color%},%{$fg[red]%}✗%{$reset_color%})"
+last_status="${open}%(?,%{$fg[green]%}✓%{$reset_color%},%{$fg[red]%}✗%{$reset_color%})${close}"
 
 # main prompt
-PROMPT='┌─${op}${last_status}${cp}─${op}${user_host_path}${cp}$(git_prompt_info)
-└─${op}${hist_no}${cp}${b} %# '
+PROMPT='┌─${last_status}─${user_host_path}$(git_prompt_info)
+└─${hist_no} %# '
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}─(%{$fg_bold[green]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}─${open}%{$fg_bold[green]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}✗%{$reset_color%})"
-ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}✓%{$reset_color%})"
+ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}✗%{$reset_color%}${close}"
+ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}✓%{$reset_color%}${close}"
 
 # prompt - PS2
 PROMPT2="%B%F{8}Continue%f%b : "
@@ -52,6 +51,9 @@ function rprompt_info() {
   # vi mode, docker, ssh
   echo "$(vi_mode_prompt_info) $docker_info$(ssh_connection)"
 }
+
+unset open close
+unset username user host wkp
 
 RPROMPT="\$(rprompt_info)"
 
