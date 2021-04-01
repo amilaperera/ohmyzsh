@@ -1,3 +1,7 @@
+# Miscellenous functions
+
+zmodload -i zsh/zutil
+
 # display tmux colors
 function tmux_colors() {
   for i in {0..255}; do
@@ -12,19 +16,44 @@ function swap() {
 }
 
 # updates the Linux distro
+# update_os (--min|--check) --verbose
 function update_os() {
   if [[ $ZSH_HAS_APT -eq 1 ]]; then
-    _echo_yellow "Identifying Debian based system"
-    sudo apt-get update && sudo apt-get upgrade -y
+    update_os::update_with_apt "${@}"
   elif [[ $ZSH_HAS_DNF -eq 1 ]]; then
-    _echo_yellow "Identifying RedHat based system"
-    sudo yum update -y
+    update_os::update_with_dnf "${@}"
   elif [[ $ZSH_HAS_PACMAN -eq 1 ]]; then
-    _echo_yellow "Identifying Arch based system"
-    sudo pacman -Syu
+    update_os::update_with_pacman "${@}"
   else
-    _echo_red "Unsupported distribution.."
+    _echo_red "Unsupported distribution!!!"
   fi
+}
+
+function update_os::update_with_dnf() {
+  _echo_yellow "Identifying RedHat based system"
+
+  zparseopts -D -E -F -min=o_min -check=o_check -verbose=o_verbose
+  cmd="sudo dnf -y"
+  [[ -n "${o_verbose}" ]] && cmd="${cmd}v"
+
+  if [[ -n "${o_min}" ]]; then
+    cmd="${cmd} upgrade-minimal"
+  elif [[ -n "${o_check}" ]]; then
+    cmd="${cmd} check-upgrade"
+  else
+    cmd="${cmd} upgrade"
+  fi
+  print "${cmd}"; eval "${cmd}"
+}
+
+function update_os::update_with_apt() {
+  _echo_yellow "Identifying Debian based system"
+  sudo apt-get update && sudo apt-get upgrade -y
+}
+
+function update_os::update_with_pacman() {
+  _echo_yellow "Identifying Arch based system"
+  sudo pacman -Syu
 }
 
 # find dictionary definition of a word
