@@ -98,9 +98,8 @@ function utils::export_distro_info() {
 
     # exporting distribution/version related information
     if utils::command_exists lsb_release; then
-      export distroname=$(lsb_release -si) # distro name
-      export distrover=$(lsb_release -sr)  # distibution version
-      export arch=$(uname -m)              # architecture
+      export DISTRO_NAME=$(lsb_release -si) # distro name
+      export DISTRO_VER=$(lsb_release -sr)  # distibution version
     else
       utils::red "Install lsb_release first"
     fi
