@@ -13,9 +13,9 @@ path+=('/snap/bin')
 [ -z $TMUX ] && export TERM=xterm-256color
 
 # setting editor
-if _command_exists 'nvim'; then
+if utils::command_exists 'nvim'; then
   VISUAL='nvim'
-elif _command_exists 'vim'; then
+elif utils::command_exists'vim'; then
   VISUAL='vim'
 else
   VISUAL='vi'

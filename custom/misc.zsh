@@ -25,12 +25,12 @@ function update_os() {
   elif [[ $ZSH_HAS_PACMAN -eq 1 ]]; then
     update_os::update_with_pacman "${@}"
   else
-    _echo_red "Unsupported distribution!!!"
+    utils::red "Unsupported distribution!!!"
   fi
 }
 
 function update_os::update_with_dnf() {
-  _echo_yellow "Identifying RedHat based system"
+  utils::yellow "Identifying RedHat based system"
 
   zparseopts -D -E -F -min=o_min -check=o_check -verbose=o_verbose
   cmd="sudo dnf -y"
@@ -47,21 +47,21 @@ function update_os::update_with_dnf() {
 }
 
 function update_os::update_with_apt() {
-  _echo_yellow "Identifying Debian based system"
+  utils::yellow "Identifying Debian based system"
   sudo apt-get update && sudo apt-get upgrade -y
 }
 
 function update_os::update_with_pacman() {
-  _echo_yellow "Identifying Arch based system"
+  utils::yellow "Identifying Arch based system"
   sudo pacman -Syu
 }
 
 # find dictionary definition of a word
 function givedef() {
-  if _command_exists dict; then
+  if utils::command_exists dict; then
     dict -d gcide "$@"
   else
-    _echo_red "Install dict program.."
+    utils::red "Install dict program.."
     return 1
   fi
 }
@@ -69,18 +69,18 @@ function givedef() {
 # convenience for setting up ssh keys
 function setup_ssh_keys() {
   if (($# != 2)); then
-    _echo_red "Usage: setup_ssh_keys <user_name> <usage>"
+    utils::red "Usage: setup_ssh_keys <user_name> <usage>"
     return 1
   fi
 
   if [[ -d ~/.ssh/${2} ]]; then
-    _echo_red "${2} directory exists under ~/.ssh"
+    utils::red "${2} directory exists under ~/.ssh"
     return 1
   fi
 
   mkdir -p ~/.ssh/${2}
   if [[ $? -ne 0 ]]; then
-    _echo_red "Couldn't create ~/.ssh/${2}"
+    utils::red "Couldn't create ~/.ssh/${2}"
     return 1
   else
     # generate ssh keys

@@ -21,32 +21,32 @@ zsh_bold_blue_color="\033[1;34m"
 zsh_reset_color="\033[0m"
 
 # echo in red color
-function _echo_red() {
+function utils::red() {
   echo -e $zsh_red_color"$@"$zsh_reset_color
 }
 
 # echo in green color
-function _echo_green() {
+function utils::green() {
   echo -e $zsh_green_color"$@"$zsh_reset_color
 }
 
 # echo in yellow color
-function _echo_yellow() {
+function utils::yellow() {
   echo -e $zsh_yellow_color"$@"$zsh_reset_color
 }
 
 # echo in blue color
-function _echo_blue() {
+function utils::blue() {
   echo -e $zsh_blue_color"$@"$zsh_reset_color
 }
 
 # logging
-function _console_log() {
+function utils::log() {
   echo '['$(date +'%a %Y-%m-%d %H:%M:%S %z')']' $1
 }
 
 # prompts the user for confirmation and returns 'y'/'n'
-function _confirm() {
+function utils::confirm() {
   local answer=''
   local choice=''
 
@@ -65,65 +65,60 @@ function _confirm() {
 }
 
 # checks if the current shell is interactive
-function _check_for_shell_interactivity() {
+function utils::check_for_shell_interactivity() {
   case "$-" in
     *i* ) return $zsh_true;;
     * ) return $zsh_false;;
   esac
 }
 
-# checks if command exists
-function _command_exists() {
-  if  (($# != 1)) ; then
-    echo "_command_exists function should take exactly one argument"
-    return $zsh_false
-  fi
-
-  type $1 >/dev/null 2>&1
+# checks if command(s) exists
+function utils::command_exists() {
+  for arg in "${@}"; do
+    if ! type $arg >/dev/null 2>&1; then
+      return $zsh_false;
+    fi
+  done
+  return $zsh_true;
 }
 
 # get the information of the installed Linux distribution
 # NOTE: lsb_release might not work on some versions or
 # you might need to install it from the official repos of the
 # particular repositories.
-function _export_distro_info() {
+function utils::export_distro_info() {
   if [[ "$OSTYPE" = linux* ]]; then
-    # exporting APT/DNF related variables
-    ZSH_HAS_APT=0
-    ZSH_HAS_DNF=0
-    ZSH_HAS_PACMAN=0
-
-    if _command_exists 'apt-get'; then
+    if utils::command_exists 'apt-get'; then
       export ZSH_HAS_APT=1
-    elif _command_exists 'dnf'; then
+    elif utils::command_exists 'dnf'; then
       export ZSH_HAS_DNF=1
-    elif _command_exists 'pacman'; then
+    elif utils::command_exists 'pacman'; then
       export ZSH_HAS_PACMAN=1
     fi
 
     # exporting distribution/version related information
-    if _command_exists lsb_release; then
+    if utils::command_exists lsb_release; then
       export distroname=$(lsb_release -si) # distro name
       export distrover=$(lsb_release -sr)  # distibution version
       export arch=$(uname -m)              # architecture
     else
-      _echo_red "Install lsb_release first"
+      utils::red "Install lsb_release first"
     fi
   fi
 }
 
 # source a file if it exists & readable
-function _source_if_possible() {
+function utils::source() {
   if [[ -r $1 ]]; then
     source $1
   fi
 }
 
 # check if we're in a tmux session or not
-function _is_tmux() {
+function utils::is_tmux() {
   [[ -n $TMUX ]] && return $zsh_true || return $zsh_false
 }
 
 # Eventually export the distribution information
-_export_distro_info
+utils::export_distro_info
 
