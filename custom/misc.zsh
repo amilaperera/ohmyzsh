@@ -66,30 +66,4 @@ function givedef() {
   fi
 }
 
-# convenience for setting up ssh keys
-function setup_ssh_keys() {
-  if (($# != 2)); then
-    utils::red "Usage: setup_ssh_keys <user_name> <usage>"
-    return 1
-  fi
-
-  if [[ -d ~/.ssh/${2} ]]; then
-    utils::red "${2} directory exists under ~/.ssh"
-    return 1
-  fi
-
-  mkdir -p ~/.ssh/${2}
-  if [[ $? -ne 0 ]]; then
-    utils::red "Couldn't create ~/.ssh/${2}"
-    return 1
-  else
-    # generate ssh keys
-    ssh-keygen -t rsa -b 4096 -C "$1" -f ~/.ssh/${2}/rsa_key_file
-    # adding ssh keys to ssh-agents.
-    # NOTE: for this step to be successful, ssh-agent must be started first.
-    # This should be handled via .zshrc/.bashrc
-    # With oh-my-zsh, simply enable ssh-agent plugin.
-    ssh-add ~/.ssh/${2}/rsa_key_file
-  fi
-}
 
