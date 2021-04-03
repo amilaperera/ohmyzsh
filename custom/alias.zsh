@@ -50,7 +50,6 @@ alias t='tmux -u'
 alias ta='tmux attach-session -t'
 alias tk='tmux kill-session -t'
 alias tl='tmux list-sessions'
-alias mux='tmuxinator'
 
 # silver searcher
 alias ag='command ag'
