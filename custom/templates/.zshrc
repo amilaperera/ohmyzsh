@@ -4,6 +4,11 @@ export ZSH=$HOME/.oh-my-zsh
 # custom theme
 ZSH_THEME="ramboda"
 
+# Since we're working off a fork this is redundant.
+# Use fork_sync.py to keep the fork up-to-date with the upstream ohmyzsh repository.
+# Uncomment the following line to disable bi-weekly auto-update checks.
+DISABLE_AUTO_UPDATE="true"
+
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 HYPHEN_INSENSITIVE="true"
