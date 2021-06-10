@@ -36,9 +36,6 @@ alias e='$VISUAL'
 alias view='$VISUAL -R'
 alias vi='$VISUAL'
 
-# Linux specific
-alias U='update_os'
-
 # ctags creation for c/c++ programs
 alias ct='ctags -R --c++-kinds=+p --fields=+iaS --extra=+q  **/*.(c|cpp|cxx|h)'
 
@@ -57,6 +54,10 @@ alias agp='ag --pager="less -R"'
 
 # dmesg helpers
 alias dmesg="dmesg --color=always"
+
+# Misc
+alias U='update_os'
+alias open='xdg-open $@ > /dev/null 2>&1'
 
 # setting global aliases
 # hacked from zsh-lovers
