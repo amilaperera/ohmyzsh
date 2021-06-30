@@ -33,12 +33,15 @@ plugins=(git)
 # vim/nvim & tmux
 plugins+=(vi-mode tmux tmuxinator)
 # misc
-plugins+=(z ssh-agent extract history-substring-search colored-man-pages)
+plugins+=(z extract history-substring-search colored-man-pages)
 # custom
 plugins+=(utils-extras zle-extras)
 
-# ssh settings
-zstyle :omz:plugins:ssh-agent identities id_github_personal
+# ssh settings (only for non-root users)
+if [[ ${UID} != 0 ]]; then
+  plugins+=(ssh-agent)
+  zstyle :omz:plugins:ssh-agent identities id_github_personal
+fi
 
 # Starts oh-my-zsh configuration
 source $ZSH/oh-my-zsh.sh
