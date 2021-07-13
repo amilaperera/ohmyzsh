@@ -66,4 +66,9 @@ function givedef() {
   fi
 }
 
+function boost_version() {
+  if [[ $ZSH_HAS_DNF -eq 1 ]]; then
+    dnf info --installed boost | grep 'Version'
+  fi
+}
 
