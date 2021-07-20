@@ -43,3 +43,7 @@ zstyle :omz:plugins:ssh-agent identities id_github_personal
 # Starts oh-my-zsh configuration
 source $ZSH/oh-my-zsh.sh
 
+# Source local zsh file (environment specific)
+local zsh_file=$HOME/.zsh_local
+utils::source_if_exists ${zsh_file}
+

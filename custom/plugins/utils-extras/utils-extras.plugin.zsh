@@ -107,7 +107,7 @@ function utils::export_distro_info() {
 }
 
 # source a file if it exists & readable
-function utils::source() {
+function utils::source_if_exists() {
   if [[ -r $1 ]]; then
     source $1
   fi
