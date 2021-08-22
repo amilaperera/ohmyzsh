@@ -15,7 +15,7 @@ path+=('/snap/bin')
 # setting editor
 if utils::command_exists 'nvim'; then
   VISUAL='nvim'
-elif utils::command_exists'vim'; then
+elif utils::command_exists 'vim'; then
   VISUAL='vim'
 else
   VISUAL='vi'
